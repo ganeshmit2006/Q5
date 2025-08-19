@@ -46,7 +46,6 @@ plt.xlabel("Month", fontsize=14)
 plt.ylabel("Revenue ($)", fontsize=14)
 plt.legend(title="Customer Segment")
 
-
 # Save as exactly 512x512 PNG
 plt.savefig("chart.png", dpi=64)
 plt.close()
