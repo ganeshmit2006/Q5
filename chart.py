@@ -10,15 +10,15 @@ np.random.seed(42)
 sns.set_style("whitegrid")
 sns.set_context("talk")
 
-# Generate synthetic website performance data
+# Generate synthetic customer engagement data
 n_samples = 300
 data = pd.DataFrame({
-    "page_load_time": np.random.normal(3, 0.5, n_samples),           # in seconds
-    "server_response_time": np.random.normal(0.2, 0.05, n_samples),  # in seconds
-    "time_to_first_byte": np.random.normal(0.1, 0.02, n_samples),    # in seconds
-    "total_requests": np.random.poisson(50, n_samples),
-    "error_rate": np.clip(np.random.normal(0.02, 0.01, n_samples), 0, 1),
-    "user_satisfaction_score": np.random.normal(7, 1.5, n_samples),  # scale 1-10
+    "email_open_rate": np.clip(np.random.normal(0.5, 0.1, n_samples), 0, 1),
+    "click_through_rate": np.clip(np.random.normal(0.2, 0.05, n_samples), 0, 1),
+    "time_on_site": np.random.normal(120, 30, n_samples),  # in seconds
+    "pages_per_visit": np.random.normal(5, 1.5, n_samples),
+    "bounce_rate": np.clip(np.random.normal(0.4, 0.1, n_samples), 0, 1),
+    "conversion_rate": np.clip(np.random.normal(0.05, 0.02, n_samples), 0, 1),
 })
 
 # Compute correlation matrix
@@ -37,7 +37,7 @@ heatmap = sns.heatmap(
 )
 
 # Add title
-plt.title("Website Performance Correlation Matrix", fontsize=16)
+plt.title("Customer Engagement Correlation Matrix", fontsize=16)
 
 # Save figure with required dimensions
 plt.savefig("chart.png", dpi=64, bbox_inches="tight")
