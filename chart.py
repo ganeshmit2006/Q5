@@ -6,38 +6,47 @@ import numpy as np
 # Set random seed for reproducibility
 np.random.seed(42)
 
-# Set Seaborn style and context
+# Set Seaborn style and context for professional appearance
 sns.set_style("whitegrid")
 sns.set_context("talk")
 
-# Generate synthetic customer engagement data
-n_samples = 300
-data = pd.DataFrame({
-    "email_open_rate": np.clip(np.random.normal(0.5, 0.1, n_samples), 0, 1),
-    "click_through_rate": np.clip(np.random.normal(0.2, 0.05, n_samples), 0, 1),
-    "time_on_site": np.random.normal(120, 30, n_samples),  # in seconds
-    "pages_per_visit": np.random.normal(5, 1.5, n_samples),
-    "bounce_rate": np.clip(np.random.normal(0.4, 0.1, n_samples), 0, 1),
-    "conversion_rate": np.clip(np.random.normal(0.05, 0.02, n_samples), 0, 1),
-})
+# Generate synthetic data for monthly revenue trends by segment
+months = pd.date_range("2024-01-01", periods=12, freq="MS").strftime("%b")
+segments = ["Standard", "Premium", "Enterprise"]
 
-# Compute correlation matrix
-corr = data.corr()
+data = []
+for segment in segments:
+    base = {
+        "Standard": 100_000,
+        "Premium": 220_000,
+        "Enterprise": 400_000,
+    }[segment]
+    trend = np.linspace(0, 30_000, 12)  # up to +30k/year trend
+    seasonality = 8000 * np.sin(np.linspace(0, 2 * np.pi, 12))  # add seasonality
+    noise = np.random.normal(0, 5000, 12)
+    revenue = base + trend + seasonality + noise
+    for i, month in enumerate(months):
+        data.append({"Month": month, "Customer Segment": segment, "Revenue ($)": revenue[i]})
 
-# Create figure and heatmap
-plt.figure(figsize=(8, 8))  # 8 inches * 64 dpi = 512 pixels
-heatmap = sns.heatmap(
-    corr,
-    annot=True,
-    fmt=".2f",
-    cmap="coolwarm",
-    square=True,
-    linewidths=0.5,
-    cbar_kws={"shrink": 0.8}
+df = pd.DataFrame(data)
+
+# Create the lineplot
+plt.figure(figsize=(8, 8))  # 8 inches * 64 dpi = 512x512 pixels
+sns.lineplot(
+    data=df,
+    x="Month",
+    y="Revenue ($)",
+    hue="Customer Segment",
+    marker="o",
+    palette="tab10",
+    linewidth=2.5
 )
+plt.title("Monthly Revenue Trend by Customer Segment", fontsize=18, weight="bold")
+plt.xlabel("Month", fontsize=14)
+plt.ylabel("Revenue ($)", fontsize=14)
+plt.legend(title="Customer Segment")
+plt.tight_layout()
 
-# Add title
-plt.title("Customer Engagement Correlation Matrix", fontsize=16)
-
-# Save figure with required dimensions
+# Save as exactly 512x512 PNG
 plt.savefig("chart.png", dpi=64, bbox_inches="tight")
+plt.close()
