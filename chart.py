@@ -43,9 +43,9 @@ lineplot = sns.lineplot(
 #plt.grid(True, linewidth=0.5)
 
 plt.title("Monthly Revenue Trend by Customer Segment", fontsize=16, weight="bold")
-plt.xlabel("Month", fontsize=14)
-plt.ylabel("Revenue ($)", fontsize=14)
-plt.legend(title="Customer Segment")
+#plt.xlabel("Month", fontsize=14)
+#plt.ylabel("Revenue ($)", fontsize=14)
+#plt.legend(title="Customer Segment")
 
 # Shrink padding around figure to prevent tight bbox over-cropping
 #plt.subplots_adjust(left=0.12, right=0.92, top=0.9, bottom=0.12)
