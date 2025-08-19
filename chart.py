@@ -48,5 +48,5 @@ plt.legend(title="Customer Segment")
 plt.tight_layout()
 
 # Save as exactly 512x512 PNG
-plt.savefig("chart.png", dpi=64, bbox_inches="tight")
+plt.savefig("chart.png", dpi=64)
 plt.close()
